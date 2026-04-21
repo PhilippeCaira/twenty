@@ -2,14 +2,15 @@
 # Patch sso.resolver.ts → SSO providers accessibles sans licence Enterprise.
 # Nécessite un rebuild twenty-server (TypeScript compilation).
 ARG TWENTY_VERSION=v1.21.0
-FROM twentycrm/twenty:${TWENTY_VERSION} AS source
 
 FROM node:20-bookworm-slim AS builder
+ARG TWENTY_VERSION
+RUN apt-get update && apt-get install -y --no-install-recommends git python3 make g++ ca-certificates && rm -rf /var/lib/apt/lists/*
+WORKDIR /
+RUN git clone --depth 1 --branch "${TWENTY_VERSION}" https://github.com/twentyhq/twenty.git /build
 WORKDIR /build
-RUN apt-get update && apt-get install -y --no-install-recommends git python3 make g++ && rm -rf /var/lib/apt/lists/*
-RUN git clone --depth 1 --branch ${TWENTY_VERSION} https://github.com/twentyhq/twenty.git .
-COPY packages/twenty-server/src/engine/core-modules/sso/sso.resolver.ts /build/packages/twenty-server/src/engine/core-modules/sso/sso.resolver.ts
-RUN corepack enable && yarn install --frozen-lockfile && \
+COPY packages/twenty-server/src/engine/core-modules/sso/sso.resolver.ts packages/twenty-server/src/engine/core-modules/sso/sso.resolver.ts
+RUN corepack enable && yarn install --immutable && \
     yarn nx build twenty-server
 
 FROM twentycrm/twenty:${TWENTY_VERSION} AS twenty-oidc

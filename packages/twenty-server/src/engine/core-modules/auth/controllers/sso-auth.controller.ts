@@ -22,7 +22,6 @@ import {
   AuthExceptionCode,
 } from 'src/engine/core-modules/auth/auth.exception';
 import { AuthRestApiExceptionFilter } from 'src/engine/core-modules/auth/filters/auth-rest-api-exception.filter';
-import { EnterpriseFeaturesEnabledGuard } from 'src/engine/core-modules/auth/guards/enterprise-features-enabled.guard';
 import { OIDCAuthGuard } from 'src/engine/core-modules/auth/guards/oidc-auth.guard';
 import { SAMLAuthGuard } from 'src/engine/core-modules/auth/guards/saml-auth.guard';
 import { AuthService } from 'src/engine/core-modules/auth/services/auth.service';
@@ -58,7 +57,6 @@ export class SSOAuthController {
 
   @Get('saml/metadata/:identityProviderId')
   @UseGuards(
-    EnterpriseFeaturesEnabledGuard,
     PublicEndpointGuard,
     NoPermissionGuard,
   )
@@ -79,7 +77,6 @@ export class SSOAuthController {
 
   @Get('oidc/login/:identityProviderId')
   @UseGuards(
-    EnterpriseFeaturesEnabledGuard,
     OIDCAuthGuard,
     PublicEndpointGuard,
     NoPermissionGuard,
@@ -91,7 +88,6 @@ export class SSOAuthController {
 
   @Get('saml/login/:identityProviderId')
   @UseGuards(
-    EnterpriseFeaturesEnabledGuard,
     SAMLAuthGuard,
     PublicEndpointGuard,
     NoPermissionGuard,
@@ -103,7 +99,6 @@ export class SSOAuthController {
 
   @Get('oidc/callback')
   @UseGuards(
-    EnterpriseFeaturesEnabledGuard,
     OIDCAuthGuard,
     PublicEndpointGuard,
     NoPermissionGuard,
@@ -114,7 +109,6 @@ export class SSOAuthController {
 
   @Post('saml/callback/:identityProviderId')
   @UseGuards(
-    EnterpriseFeaturesEnabledGuard,
     SAMLAuthGuard,
     PublicEndpointGuard,
     NoPermissionGuard,

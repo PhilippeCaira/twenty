@@ -3,7 +3,7 @@
 # Nécessite un rebuild twenty-server (TypeScript compilation).
 ARG TWENTY_VERSION=v1.21.0
 
-FROM node:20-bookworm-slim AS builder
+FROM node:24-bookworm-slim AS builder
 ARG TWENTY_VERSION
 RUN apt-get update && apt-get install -y --no-install-recommends git python3 make g++ ca-certificates && rm -rf /var/lib/apt/lists/*
 WORKDIR /

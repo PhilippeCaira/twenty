@@ -1,5 +1,5 @@
 # Twenty + OIDC retrait EnterpriseFeaturesEnabledGuard
-# Patch sso.resolver.ts → SSO providers accessibles sans licence Enterprise.
+# Patch sso.resolver.ts + sso-auth.controller.ts → SSO providers accessibles sans licence Enterprise.
 # Nécessite un rebuild twenty-server (TypeScript compilation).
 ARG TWENTY_VERSION=v1.21.0
 
@@ -10,6 +10,7 @@ WORKDIR /
 RUN git clone --depth 1 --branch "${TWENTY_VERSION}" https://github.com/twentyhq/twenty.git /build
 WORKDIR /build
 COPY packages/twenty-server/src/engine/core-modules/sso/sso.resolver.ts packages/twenty-server/src/engine/core-modules/sso/sso.resolver.ts
+COPY packages/twenty-server/src/engine/core-modules/auth/controllers/sso-auth.controller.ts packages/twenty-server/src/engine/core-modules/auth/controllers/sso-auth.controller.ts
 RUN corepack enable && yarn install --immutable && \
     yarn nx build twenty-server
 

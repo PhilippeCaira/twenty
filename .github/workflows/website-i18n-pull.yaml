@@ -32,6 +32,8 @@ concurrency:
 jobs:
   pull_website_translations:
     name: Pull website translations
+    # Skip sur les forks personnels — pas d'accès au projet Crowdin twenty.
+    if: github.repository_owner != 'PhilippeCaira'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

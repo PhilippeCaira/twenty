@@ -21,6 +21,8 @@ concurrency:
 jobs:
   extract_website_translations:
     name: Extract and upload website translations
+    # Skip sur les forks personnels — pas d'accès au projet Crowdin twenty.
+    if: github.repository_owner != 'PhilippeCaira'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

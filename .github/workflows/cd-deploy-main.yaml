@@ -10,6 +10,9 @@ on:
 
 jobs:
   deploy-main:
+    # Skip sur les forks personnels — dispatch vers twentyhq/twenty-infra
+    # absent et secret TWENTY_INFRA_TOKEN non défini chez nous.
+    if: github.repository_owner != 'PhilippeCaira'
     timeout-minutes: 3
     runs-on: ubuntu-latest
     steps:
